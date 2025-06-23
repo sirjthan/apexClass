@@ -47,23 +47,40 @@ public with sharing class DemonstraEstrutura {
 
         dataEHora = dataEHora.addDays(diasASomar);
         system.debug('A data e hora daqui a '+diasASomar+' dias é '+dataEHora);
+
+        Id idValido = '001D00D000i8MUDIAZ';
         
-        //Variáveis do tipo sObject
+   
+             //Variáveis do tipo sObject
 
         Account acc = new Account();
         acc.Name = 'Goku';
         acc.Phone = '123456';
         system.debug('O valor do objeto acc é '+acc);
+        
         //insert acc;
-
+        
         Opportunity opp = new Opportunity();
-        opp.Name = 'teste Opp';
-        opp.Description = 'Oportunidade de testes';
-        system.debug('O valor do objeto opp é '+opp);
+        opp.Name = 'Teste opp';
+        opp.Description = 'oportunidade criada para testes';
+        system.debug('O valor do objeto opp é = '+opp);
 
-        sObject sOj = new sObject(); //objeto genérico
+        //exemplos utilização sObject
+        Account recuperaDadosAccount = (Account)DemonstraEstrutura.loadObjectInfoById('001aj00001BhIxKAAV');
+        system.debug('recuperaDadosAccount = ' +recuperaDadosAccount);
 
+        Opportunity oppRecupera = (Opportunity)DemonstraEstrutura.loadObjectInfoById('006aj00000CdqwHAAR');
+        system.debug('Opportunity = ' +oppRecupera);
         
-        
+            
+    }   
+
+    public static sObject loadObjectInfoById(Id recordId) {
+        DescribeSObjectResult objectType = recordId.getSobjectType().getDescribe();
+        List<String> objectFields = new List<String>(objectType.fields.getMap().keySet());
+        String query = 'SELECT ' +String.join(objectFields, ',') + ' FROM ' + objectType.getName() +
+        ' WHERE Id = \'' + String.escapeSingleQuotes(recordId) + '\' LIMIT 1';
+        return Database.query(query);
     }
+ 
 }
