@@ -25,6 +25,16 @@ public with sharing class ContaBancaria {
     public void depositar(Decimal valorDepositado){
     this.saldoAtual += valorDepositado;
     }
+    
+    public String getName(){
+        return this.nomeCorrentista;
+    }
 
-   
+    public void setName(String nome){
+        this.nomeCorrentista = nome;
+
+    }
+  
+    
+
 } 
