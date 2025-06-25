@@ -23,7 +23,7 @@ public with sharing class ContaBancaria {
 
 
     public void depositar(Decimal valorDepositado){
-    this.saldoAtual -= valorDepositado;
+    this.saldoAtual += valorDepositado;
     }
 
    
