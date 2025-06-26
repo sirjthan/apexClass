@@ -354,9 +354,71 @@ public with sharing class DemonstraEstrutura {
             }
             return sum / numbers.size();
         }  
-            //FUNÇÃO recebe dois inteiros(num1 e num2) E RETORNA A a soma deles (somaDoisNumeros);
-            //List<Double> doubleList = new List<Double>{num1,num2}
- 
+        
+        //FUNÇÃO recebe dois inteiros(num1 e num2) E RETORNA A a soma deles (somaDoisNumeros);
+        //List<Double> doubleList = new List<Double>{num1,num2}
+        //Retonra uma lista com todos os contatoos
+        public static List<Contact> getContacts(String name){
+            List<Contact> contactList = [SELECT Id, FirstName, LastName, Email FROM Contact WHERE FirstName = :name];
+            return contactList;
+        }
+
+        public static void adjustphone(){
+            List<Contact> contactList = [SELECT Id, Email, Phone FROM Contact];
+            for(Contact c : contactList){
+                if(c.Phone == null){
+                    system.debug('O coantato está com o telefone vazio: '+c.Id);
+                }        
+                    
+        }
+    }    
+
+        //exemplo DML
+        public static void exampleDml(){
+            List<Account> accList = [SELECT Id FROM Account WHERE Name = 'Teste 1'];
+
+            //inserindo dados
+            Account acc = new Account();
+            acc.Name = 'Teste 1';
+            if(accList.size() == 0){
+                 insert acc;
+        }
+        //atualizando dados    
+        Account accUpd = [SELECT Id, Name FROM Account WHERE Name = 'Teste 1' LIMIT 1];
+        accUpd.name = 'Teste 2';
+        update accUpd;
+
+        //exclui registros
+        delete accList;
+    }
+
+        
+
+        //exemplo DML em massa
+        public static void exampleDmlEmMassa(){
+            List<Account> accountToInsert = new List<Account>();
+            
+            Account acc1 = new Account();
+            acc1.Name = 'Exemplo em massa 1';
+            accountToInsert.add(acc1);
+           
+            Account acc2 = new Account();
+            acc2.Name = 'Exemplo em massa 2';
+            accountToInsert.add(acc2);
+            
+            Account acc3 = new Account();
+            acc3.Name = 'Exemplo em massa 3';
+            accountToInsert.add(acc3);
+            
+            Account acc4 = new Account();
+            acc4.Name = 'Exemplo em massa 4';
+            accountToInsert.add(acc4);
+
+            insert accountToInsert;
+
+         }
+
+           
 }
 
     
